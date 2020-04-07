@@ -93,54 +93,63 @@ export default {
     };
   },
 
-  // mounted() {
-  //   const that = this;
+  async mounted() {
+    try {
+      await this.getAccount();
+      await this.getAccountTransactionsHistory();
+    } catch (error) {
+      console.log(error);
+    }
 
-  //   axios
-  //     .get(`http://localhost:8000/api/accounts/${this.$route.params.id}`)
-  //     .then(function(response) {
-  //       if (!response.data.length) {
-  //         window.location = "/";
-  //       } else {
-  //         that.account = response.data[0];
+    // axios
+    //   .get(
+    //     `http://localhost:8000/api/accounts/${
+    //       that.$route.params.id
+    //     }/transactions`
+    //   )
+    //   .then(function(response) {
+    //     that["transactions"] = response.data;
 
-  //         if (that.account && that.transactions) {
-  //           that.loading = false;
-  //         }
-  //       }
-  //     });
+    //     var transactions = [];
+    //     for (let i = 0; i < that.transactions.length; i++) {
+    //       that.transactions[i].amount =
+    //         (that.account.currency === "usd" ? "$" : "€") +
+    //         that.transactions[i].amount;
 
-  //   axios
-  //     .get(
-  //       `http://localhost:8000/api/accounts/${
-  //         that.$route.params.id
-  //       }/transactions`
-  //     )
-  //     .then(function(response) {
-  //       that["transactions"] = response.data;
+    //       if (that.account.id != that.transactions[i].to) {
+    //         that.transactions[i].amount = "-" + that.transactions[i].amount;
+    //       }
 
-  //       var transactions = [];
-  //       for (let i = 0; i < that.transactions.length; i++) {
-  //         that.transactions[i].amount =
-  //           (that.account.currency === "usd" ? "$" : "€") +
-  //           that.transactions[i].amount;
+    //       transactions.push(that.transactions[i]);
+    //     }
 
-  //         if (that.account.id != that.transactions[i].to) {
-  //           that.transactions[i].amount = "-" + that.transactions[i].amount;
-  //         }
+    //     that.transactions = transactions;
 
-  //         transactions.push(that.transactions[i]);
-  //       }
-
-  //       that.transactions = transactions;
-
-  //       if (that.account && that.transactions) {
-  //         that.loading = false;
-  //       }
-  //     });
-  // },
+    //     if (that.account && that.transactions) {
+    //       that.loading = false;
+    //     }
+    //   });
+  },
 
   methods: {
+    async getAccount() {
+      try {
+        const { data } = await this.$axios.get(`/accounts/${this.$route.params.id}`);
+        this.account = data;
+        this.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getAccountTransactionsHistory() {
+      try {
+        const { data } = await this.$axios.get(`/accounts/${this.$route.params.id}/transactions`);
+        console.log(data);
+        this.transactions = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     onSubmit() {
     // onSubmit(evt) {
       // var that = this;
