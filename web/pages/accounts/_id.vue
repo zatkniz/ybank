@@ -43,19 +43,19 @@
           </b-form-group>
 
           <b-form-group id="input-group-currency" label="Currency:" label-for="input-currency">
-            <b-input-group prepend="$" size="sm">
-              <b-form-input
-                id="input-currency"
-                v-model="payment.currency_id"
-                type="number"
-                required
-                placeholder="Amount"
-              ></b-form-input>
-            </b-input-group>
+              <b-form-select 
+                id="input-currency" 
+                value-field="id" 
+                text-field="name" 
+                required 
+                v-model="payment.currency_id" 
+                :options="currencies" 
+                size="sm">
+              </b-form-select>
           </b-form-group>
 
           <b-form-group id="input-group-2" label="Amount:" label-for="input-2">
-            <b-input-group prepend="$" size="sm">
+            <b-input-group :prepend="getCurrencySign()" size="sm">
               <b-form-input
                 id="input-2"
                 v-model="payment.amount"
@@ -95,7 +95,9 @@ export default {
   data() {
     return {
       show: false,
-      payment: {},
+      payment: {
+        currency_id: 1
+      },
       fields: [
         { key: 'id', label: 'Transaction Id' },
         { key: 'sender.name', label: 'Sender Name' },
@@ -105,7 +107,7 @@ export default {
       ],
       account: null,
       transactions: [],
-
+      currencies: [],
       loading: true
     };
   },
@@ -114,6 +116,7 @@ export default {
     try {
       await this.getAccount();
       await this.getAccountTransactionsHistory();
+      await this.getCurrencies();
     } catch (error) {
       console.log(error);
     }
@@ -129,24 +132,52 @@ export default {
         console.log(error);
       }
     },
+    getCurrencySign() {
+        const currency = this.currencies.find( currency => currency.id == this.payment.currency_id);
+        return currency?.sign;
+    },
+    async getCurrencies() {
+      try {
+        const { data } = await this.$axios.get(`/currencies`);
+        this.currencies = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getAccountTransactionsHistory() {
       try {
         const { data } = await this.$axios.get(`/accounts/${this.$route.params.id}/transactions`);
-        console.log(data);
         this.transactions = data;
       } catch (error) {
         console.log(error);
       }
     },
     async onSubmit() {
-      try {
         this.payment.from = this.$route.params.id;
-        await this.$axios.post(`/transactions`,this.payment);
-        await this.getAccount();
-        await this.getAccountTransactionsHistory();
-      } catch (error) {
-        console.log(error);
-      }
+
+        await this.$axios.post(`/transactions`,this.payment).then(async res => {
+          this.$bvToast.toast(`Payment Succesfully Sent`, {
+            title: 'Success',
+            autoHideDelay: 3000,
+            appendToast: false,
+            variant: 'success'
+          })
+
+          await this.getAccount();
+          await this.getAccountTransactionsHistory();
+
+          this.payment = {
+            currency_id: 1
+          };
+          this.show = false;
+        }).catch(error => {
+          this.$bvToast.toast(error.response.data.message, {
+            title: 'Error',
+            autoHideDelay: 3000,
+            appendToast: false,
+            variant: 'danger'
+          })
+        });
     }
   }
 };

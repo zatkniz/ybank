@@ -19,7 +19,8 @@ class TransactionController extends Controller
 
     public function save(StoreTransaction $request) {
         try {
-
+            if($request->input('from') == $request->input('to')) abort(400, 'Sender cannot be the same as receiver.');
+            
             $sender = Account::find($request->input('from')) ?? abort(404, 'Sender does not exist.');
             $receiver = Account::find($request->input('to')) ?? abort(404, 'Receiver does not exist.');
 
