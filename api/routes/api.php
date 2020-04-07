@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('accounts/{account}', 'AccountController@getAccount');
 Route::get('accounts/{id}/transactions', 'TransactionController@getAccountTransactionHistory');
+Route::post('transactions', 'TransactionController@save');
 
 // Route::post('accounts/{id}/transactions', function (Request $request, $id) {
 //     $to = $request->input('to');

@@ -11,8 +11,7 @@
           <div>
             Balance:
             <code
-              >{{ account.currency === "usd" ? "$" : "€"
-              }}{{ account.balance }}</code
+              >{{ account.currency.sign}}{{ account.balance }}</code
             >
           </div>
         </b-card-text>
@@ -31,7 +30,7 @@
       </b-card>
 
       <b-card class="mt-3" header="New Payment" v-show="show">
-        <b-form @submit="onSubmit">
+        <b-form @submit.prevent="onSubmit">
           <b-form-group id="input-group-1" label="To:" label-for="input-1">
             <b-form-input
               id="input-1"
@@ -41,6 +40,18 @@
               required
               placeholder="Destination ID"
             ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="input-group-currency" label="Currency:" label-for="input-currency">
+            <b-input-group prepend="$" size="sm">
+              <b-form-input
+                id="input-currency"
+                v-model="payment.currency_id"
+                type="number"
+                required
+                placeholder="Amount"
+              ></b-form-input>
+            </b-input-group>
           </b-form-group>
 
           <b-form-group id="input-group-2" label="Amount:" label-for="input-2">
@@ -76,7 +87,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import axios from "axios";
 import Vue from "vue";
 
@@ -106,35 +117,6 @@ export default {
     } catch (error) {
       console.log(error);
     }
-
-    // axios
-    //   .get(
-    //     `http://localhost:8000/api/accounts/${
-    //       that.$route.params.id
-    //     }/transactions`
-    //   )
-    //   .then(function(response) {
-    //     that["transactions"] = response.data;
-
-    //     var transactions = [];
-    //     for (let i = 0; i < that.transactions.length; i++) {
-    //       that.transactions[i].amount =
-    //         (that.account.currency === "usd" ? "$" : "€") +
-    //         that.transactions[i].amount;
-
-    //       if (that.account.id != that.transactions[i].to) {
-    //         that.transactions[i].amount = "-" + that.transactions[i].amount;
-    //       }
-
-    //       transactions.push(that.transactions[i]);
-    //     }
-
-    //     that.transactions = transactions;
-
-    //     if (that.account && that.transactions) {
-    //       that.loading = false;
-    //     }
-    //   });
   },
 
   methods: {
@@ -156,60 +138,15 @@ export default {
         console.log(error);
       }
     },
-    onSubmit() {
-    // onSubmit(evt) {
-      // var that = this;
-
-      // evt.preventDefault();
-
-      // axios.post(
-      //   `http://localhost:8000/api/accounts/${
-      //     this.$route.params.id
-      //   }/transactions`,
-
-      //   this.payment
-      // );
-
-      // that.payment = {};
-      // that.show = false;
-
-      // // update items
-      // setTimeout(() => {
-      //   axios
-      //     .get(`http://localhost:8000/api/accounts/${this.$route.params.id}`)
-      //     .then(function(response) {
-      //       if (!response.data.length) {
-      //         window.location = "/";
-      //       } else {
-      //         that.account = response.data[0];
-      //       }
-      //     });
-
-      //   axios
-      //     .get(
-      //       `http://localhost:8000/api/accounts/${
-      //         that.$route.params.id
-      //       }/transactions`
-      //     )
-      //     .then(function(response) {
-      //       that["transactions"] = response.data;
-
-      //       var transactions = [];
-      //       for (let i = 0; i < that.transactions.length; i++) {
-      //         that.transactions[i].amount =
-      //           (that.account.currency === "usd" ? "$" : "€") +
-      //           that.transactions[i].amount;
-
-      //         if (that.account.id != that.transactions[i].to) {
-      //           that.transactions[i].amount = "-" + that.transactions[i].amount;
-      //         }
-
-      //         transactions.push(that.transactions[i]);
-      //       }
-
-      //       that.transactions = transactions;
-      //     });
-      // }, 200);
+    async onSubmit() {
+      try {
+        this.payment.from = this.$route.params.id;
+        await this.$axios.post(`/transactions`,this.payment);
+        await this.getAccount();
+        await this.getAccountTransactionsHistory();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

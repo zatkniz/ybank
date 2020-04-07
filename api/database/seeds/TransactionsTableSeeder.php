@@ -16,7 +16,7 @@ class TransactionsTableSeeder extends Seeder
             'to' => 2,
             'details' => 'sample transaction',
             'amount' => 14,
-            'currency' => 1
+            'currency_id' => 1
         ]);
 
         DB::table('transactions')->insert([
@@ -24,7 +24,7 @@ class TransactionsTableSeeder extends Seeder
             'to' => 2,
             'details' => 'sample transaction 2',
             'amount' => 24,
-            'currency' => 1
+            'currency_id' => 1
         ]);
 
         DB::table('transactions')->insert([
@@ -32,7 +32,7 @@ class TransactionsTableSeeder extends Seeder
             'to' => 1,
             'details' => 'sample transaction 3',
             'amount' => 15,
-            'currency' => 2
+            'currency_id' => 2
         ]);
     }
 }
