@@ -16,6 +16,7 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->integer('currency');
             $table->float('balance');
         });
     }
