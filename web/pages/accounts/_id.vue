@@ -70,7 +70,7 @@
       </b-card>
 
       <b-card class="mt-3" header="Payment History">
-        <b-table striped hover :items="transactions"></b-table>
+        <b-table striped hover :items="transactions" :fields="fields"></b-table>
       </b-card>
     </div>
   </div>
@@ -85,7 +85,13 @@ export default {
     return {
       show: false,
       payment: {},
-
+      fields: [
+        { key: 'id', label: 'Transaction Id' },
+        { key: 'sender.name', label: 'Sender Name' },
+        { key: 'receiver.name', label: 'Receiver Name' },
+        { key: 'amount', label: 'Amount' },
+        'details',
+      ],
       account: null,
       transactions: [],
 
