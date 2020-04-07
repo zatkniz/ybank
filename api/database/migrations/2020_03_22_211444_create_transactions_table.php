@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->bigInteger('from')->unsigned();
             $table->bigInteger('to')->unsigned();
-            $table->integer('currency');
+            $table->integer('currency_id');
             $table->text('details');
             $table->float('amount');
         });
