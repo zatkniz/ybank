@@ -1,0 +1,20 @@
+{
+  "name": "ybank",
+  "version": "1.0.0",
+  "description": "Hi! Are you ready to join our new team working on an innovative and exciting project?  We are looking for a frontend, backend or full-stack developer.  If you are not applying for a full-stack position, let us know and try to solve as much as you can.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init": "cd api && cp .env.example && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker-compose exec laradock_workspace_1 php artisan migrate --seed && cd ../web && npm install && npm run dev echo navigate to http://localhost/ to see the application running"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zatkniz/ybank.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zatkniz/ybank/issues"
+  },
+  "homepage": "https://github.com/zatkniz/ybank#readme"
+}
