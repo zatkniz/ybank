@@ -1,0 +1,46 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'run', 'init' ]
+2 info using npm@3.5.2
+3 info using node@v8.10.0
+4 verbose run-script [ 'preinit', 'init', 'postinit' ]
+5 info lifecycle ybank@1.0.0~preinit: ybank@1.0.0
+6 silly lifecycle ybank@1.0.0~preinit: no script for preinit, continuing
+7 info lifecycle ybank@1.0.0~init: ybank@1.0.0
+8 verbose lifecycle ybank@1.0.0~init: unsafe-perm in lifecycle true
+9 verbose lifecycle ybank@1.0.0~init: PATH: /usr/share/npm/bin/node-gyp-bin:/home/zatkniz/Desktop/delete this/ybank/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+10 verbose lifecycle ybank@1.0.0~init: CWD: /home/zatkniz/Desktop/delete this/ybank
+11 silly lifecycle ybank@1.0.0~init: Args: [ '-c',
+11 silly lifecycle   'cd api && cp .env.example .env && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker exec laradock_workspace_1 php artisan migrate --seed && cd ../../web && npm install && npm run dev echo navigate to http://localhost/ to see the application running' ]
+12 silly lifecycle ybank@1.0.0~init: Returned: code: 1  signal: null
+13 info lifecycle ybank@1.0.0~init: Failed to exec init script
+14 verbose stack Error: ybank@1.0.0 init: `cd api && cp .env.example .env && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker exec laradock_workspace_1 php artisan migrate --seed && cd ../../web && npm install && npm run dev echo navigate to http://localhost/ to see the application running`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/usr/share/npm/lib/utils/lifecycle.js:232:16)
+14 verbose stack     at emitTwo (events.js:126:13)
+14 verbose stack     at EventEmitter.emit (events.js:214:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/share/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:126:13)
+14 verbose stack     at ChildProcess.emit (events.js:214:7)
+14 verbose stack     at maybeClose (internal/child_process.js:925:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+15 verbose pkgid ybank@1.0.0
+16 verbose cwd /home/zatkniz/Desktop/delete this/ybank
+17 error Linux 5.3.0-40-generic
+18 error argv "/usr/bin/node" "/usr/bin/npm" "run" "init"
+19 error node v8.10.0
+20 error npm  v3.5.2
+21 error code ELIFECYCLE
+22 error ybank@1.0.0 init: `cd api && cp .env.example .env && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker exec laradock_workspace_1 php artisan migrate --seed && cd ../../web && npm install && npm run dev echo navigate to http://localhost/ to see the application running`
+22 error Exit status 1
+23 error Failed at the ybank@1.0.0 init script 'cd api && cp .env.example .env && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker exec laradock_workspace_1 php artisan migrate --seed && cd ../../web && npm install && npm run dev echo navigate to http://localhost/ to see the application running'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the ybank package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     cd api && cp .env.example .env && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker exec laradock_workspace_1 php artisan migrate --seed && cd ../../web && npm install && npm run dev echo navigate to http://localhost/ to see the application running
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs ybank
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls ybank
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init": "cd api && cp .env.example .env && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker exec laradock_workspace_1 php artisan migrate --seed && cd ../web && npm install && npm run dev echo navigate to http://localhost/ to see the application running"
+    "init": "cd api && cp .env.example .env && composer install && git clone https://github.com/Laradock/laradock.git && cd laradock && cp env-example .env && docker-compose up -d nginx mysql && docker exec laradock_workspace_1 php artisan migrate --seed && cd ../../web && npm install && npm run dev",
+    "start": "cd api/laradock && docker-compose up -d nginx mysql && cd ../../web && npm run dev"
   },
   "repository": {
     "type": "git",
